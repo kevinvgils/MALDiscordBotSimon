@@ -1,4 +1,4 @@
-const { getAnime, getUser } = require('./calls.js')
+const { getAnime, getUser, getUserList } = require('./calls.js')
 
 const { Client, Intents } = require('discord.js');
 const { DISCORD_API_KEY } = require('./../config.json');
@@ -22,18 +22,22 @@ client.on('messageCreate', async (message) => {
         if(CMD_NAME === 'user') {
             getUser(args[0]).then(async (data) => {
                 const user = data;
-                // const img = await generateImage(user);
                 const embedMessage = exampleEmbed(user);
                 console.log(data);
                 message.channel.send({embeds: [embedMessage]})
-                // message.channel.send({
-                //     content: user.url, 
-                //     files: [img]
-                // });
             });
         }
         if(CMD_NAME === 'anime') {
             getAnime("naruto")
+        }
+
+        if(CMD_NAME === 'list') {
+            getUserList(args[0]).then(async (data) => {
+                const list = data;
+                // const embedMessage = exampleEmbed(user);
+                console.log(list);
+                // message.channel.send({embeds: [embedMessage]})
+            });
         }
     }
 })

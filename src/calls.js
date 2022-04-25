@@ -1,4 +1,6 @@
 const fetch = require('node-fetch')
+const { MAL_CLIENT_ID } = require('./../config.json');
+
 
 module.exports = {
     getAnime: function(searchterm) {
@@ -18,5 +20,21 @@ module.exports = {
             .then(data => {
                 return data.data;
             })
+    },
+    getUserList: function(username) {
+        const header = {
+            "X-MAL-CLIENT_ID": MAL_CLIENT_ID
+        }
+        return fetch('https://api.myanimelist.net/v2/users/'+ username + '/animelist', { headers: header })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.data);
+            return data.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
     }
 }
