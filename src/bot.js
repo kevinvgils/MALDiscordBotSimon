@@ -2,7 +2,7 @@ const { getAnime, getUser, getUserList } = require('./calls.js')
 
 const { Client, Intents } = require('discord.js');
 const { DISCORD_API_KEY } = require('./../config.json');
-const exampleEmbed = require('./embedMessage.js');
+const { profileMessage, listMessage } = require('./embedMessage.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const PREFIX = '/';
 
@@ -22,8 +22,7 @@ client.on('messageCreate', async (message) => {
         if(CMD_NAME === 'user') {
             getUser(args[0]).then(async (data) => {
                 const user = data;
-                const embedMessage = exampleEmbed(user);
-                console.log(data);
+                const embedMessage = profileMessage(user);
                 message.channel.send({embeds: [embedMessage]})
             });
         }
@@ -34,9 +33,8 @@ client.on('messageCreate', async (message) => {
         if(CMD_NAME === 'list') {
             getUserList(args[0]).then(async (data) => {
                 const list = data;
-                // const embedMessage = exampleEmbed(user);
-                console.log(list);
-                // message.channel.send({embeds: [embedMessage]})
+                const embedMessage = listMessage(list);
+                message.channel.send({embeds: [embedMessage]})
             });
         }
     }

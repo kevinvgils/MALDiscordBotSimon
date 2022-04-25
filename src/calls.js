@@ -25,12 +25,11 @@ module.exports = {
         const header = {
             "X-MAL-CLIENT_ID": MAL_CLIENT_ID
         }
-        return fetch('https://api.myanimelist.net/v2/users/'+ username + '/animelist', { headers: header })
+        return fetch('https://api.myanimelist.net/v2/users/'+ username + '/animelist?limit=3&sort=list_score', { headers: header })
         .then(response => {
             return response.json();
         })
         .then(data => {
-            console.log(data.data);
             return data.data;
         })
         .catch(err => {
